@@ -21,19 +21,27 @@ enter_docker:
 run_gpu: build_gpu
 	docker run -it --name  $(PROJECT_NAME) \
 	--runtime nvidia \
+    --privileged \
+    -e DOCKER_NET_HOST=172.17.0.1 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v `pwd`/:/app \
 	-p 8888:8888 \
 	-p 6006:6006 \
-	-v `pwd`/:/app \
 	$(PROJECT_NAME);
 
 ## run no gpu
 run_no_gpu: build_no_gpu
 	docker run -it --name  $(PROJECT_NAME) \
+    --privileged \
+    -e DOCKER_NET_HOST=172.17.0.1 \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v `pwd`/:/app \
 	-p 8888:8888 \
 	-p 6006:6006 \
 	-v `pwd`/:/app \
 	$(PROJECT_NAME);
 
+docker run --privileged --rm -e DOCKER_NET_HOST=172.17.0.1 -v /var/run/docker.sock:/var/run/docker.sock universe pytest
 
 
 
