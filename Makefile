@@ -6,7 +6,7 @@
 #################################################################################
 
 PROJECT_DIR       := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-PROJECT_NAME       = ai-bancontact-card-number-recognizer
+PROJECT_NAME       = universe
 PYTHON_INTERPRETER = python3
 
 #################################################################################
