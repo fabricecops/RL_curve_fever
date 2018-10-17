@@ -58,7 +58,7 @@ ADD . .
 # # Install remote packages
 # #--------------------------
 RUN pip install -r /app/docker/requirements.txt
-RUN pip install tensorflow-gpu -y
+RUN pip install tensorflow-gpu
 # #--------------------------
 # # Install local packages
 # #--------------------------
