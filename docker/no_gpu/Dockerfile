@@ -45,7 +45,7 @@ RUN pip3 install -r /app/docker/requirements.txt
 # # Install local packages
 # #--------------------------
 RUN git submodule update --init --recursive
-RUN cd /app/lib/universe/  && pip install -e .
+RUN cd /app/lib/universe/  && pip3 install -e .
 RUN pip3 install -e .
 
 

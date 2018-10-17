@@ -47,7 +47,7 @@ RUN pip3 install tensorflow-gpu
 # #--------------------------
 
 RUN git submodule update --init --recursive
-RUN cd /app/lib/universe/  && pip install -e .
+RUN cd /app/lib/universe/  && pip3 install -e .
 RUN pip3 install -e .
 
 
