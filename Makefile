@@ -6,12 +6,8 @@
 #################################################################################
 
 PROJECT_DIR       := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUCKET             = itp-ai-bancontact-card-number-recognizer
-PROFILE            = default
 PROJECT_NAME       = ai-bancontact-card-number-recognizer
 PYTHON_INTERPRETER = python3
-GCE_NAME           = vmpolaris
-GCLOUD_ACCOUNT     = fabrice.cops
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -39,61 +35,16 @@ run_no_gpu: build_no_gpu
 	$(PROJECT_NAME);
 
 
-## (ARG=folder) Upload Data to gs
-sync_data_to_gs:
-	gsutil rsync -d -r data/raw gs://$(BUCKET)/$(folder);
-
-
-## (ARG=folder) Rsync src, scripts from vm
-rsync_folder_from_vm:
-	rsync -ave ssh $(GCE_NAME):~/$(PROJECT_NAME)/$(folder)/ ./$(folder)/
-
 
 ## init directory after clone
 init:
-	mkdir data || echo dir already created
-	cd data && mkdir raw || echo dir already created;
-	cd data && mkdir interim || echo dir already created;
-	cd data && mkdir processed || echo dir already created;
-	sudo git submodule update --init --recursive || echo submodule already loaded;
-	make sync_data_from_gs folder=data/raw || echo error in synchronisation data;
-	for FILE in data/raw/*.zip; do \
-		unzip $$FILE -d data/interim; \
-	done
 
-## Setup SSH tunnels
-setup_tunnels:
-	ssh -Nf -L 8888:localhost:8888 $(GCE_NAME)
-	ssh -Nf -L 6006:localhost:6006 $(GCE_NAME)
-	while True; do \
-		rsync -ave ssh README.md .gits .gitmodules .gitignore .dockerignore  ./src  ./docker  ./Makefile ./setup.py $(GCE_NAME):~/$(PROJECT_NAME)/; \
-		sleep 1; \
-	done
 
-## setup ssh keys
-setup_ssh_keys:
-	#gcloud config set account $(GCLOUD_ACCOUNT)
-	#gcloud auth login
-	rm ~/.ssh/config || echo no ssh config file present
-	gcloud  compute config-ssh;
-	nano ~/.ssh/config
 
 #################################################################################
 # Private commands                                                              #
 #################################################################################
 
-rsync_src_to_vm:
-	rsync -ave ssh ./src  ./docker .dockerignore ./Makefile ./setup.py $(GCE_NAME):~/$(PROJECT_NAME)/;
-
-sync_data_from_gs:
-	gsutil rsync  -d -r  gs://$(BUCKET)/$(folder) $(folder);
-
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
-
-lint:
-	flake8 src
 
 build_no_gpu:
 	docker stop $(PROJECT_NAME);docker rm  $(PROJECT_NAME);docker build -f docker/no_gpu/Dockerfile -t $(PROJECT_NAME) .
