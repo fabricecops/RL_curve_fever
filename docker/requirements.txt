@@ -1,0 +1,14 @@
+
+psutil 
+pandas 
+sklearn 
+matplotlib 
+imageio 
+h5py
+keras 
+jupyter
+opencv-python
+xmltodict
+tensorflow
+progressbar
+pascal-voc-writer
