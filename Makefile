@@ -36,8 +36,13 @@ run_no_gpu: build_no_gpu
 
 
 
+
 ## init directory after clone
 init:
+	git submodule update --init --recursive
+
+
+
 
 
 
