@@ -21,7 +21,9 @@ RUN apt-get update && apt-get install -q -y \
     build-essential \
 	libgtk2.0-dev \
 	nano \
-	git
+	git \
+	golang \
+	libjpeg-turbo8-dev
 
 RUN pip3 install --upgrade pip
 
