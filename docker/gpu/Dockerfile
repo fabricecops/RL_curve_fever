@@ -64,6 +64,8 @@ RUN pip install tensorflow-gpu
 # #--------------------------
 RUN git submodule update --init --recursive
 RUN cd /app/lib/universe/  && pip install -e .
+RUN pip uninstall -y gym
+RUN pip install gym==0.9.5
 RUN pip install -e .
 
 
