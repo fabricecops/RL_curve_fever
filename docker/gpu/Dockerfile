@@ -47,7 +47,7 @@ RUN pip3 install tensorflow-gpu
 # #--------------------------
 
 RUN git submodule update --init --recursive
-RUN cd /app/lib/keras_retinanet/ && pip3 install . --user && python3 setup.py build_ext --inplace
+RUN cd /app/lib/universe/  && pip install -e .
 RUN pip3 install -e .
 
 

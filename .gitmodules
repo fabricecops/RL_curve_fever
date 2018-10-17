@@ -1,0 +1,3 @@
+[submodule "lib/universe"]
+	path = lib/universe
+	url = https://github.com/openai/universe.git
